@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سوق بلدنا - الصفحة الرئيسية</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text-color: #333;
+      --button-bg: #FF5722;
+      --button-hover: #E64A19;
+      --background-color: #FFC300;
+      --nav-bg: #D84315;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--background-color);
+      color: var(--text-color);
+      text-align: center;
+      direction: rtl;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      padding: 10px 0;
+      z-index: 1000;
+      overflow-x: auto;
+      white-space: nowrap;
+      display: flex;
+      scrollbar-width: none;
+    }
+
+    nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      padding: 0 10px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      transition: background 0.3s;
+      flex-shrink: 0;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .content {
+      width: 90%;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      margin-top: 80px;
+    }
+
+    .logo {
+      width: 250px;
+      height: auto;
+      display: block;
+      margin: 10px auto;
+    }
+
+    .search-container {
+      margin: 15px auto;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .search-container input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #D84315;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .search-container input:focus {
+      border-color: #FF5722;
+      outline: none;
+    }
+
+    .categories-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+      justify-content: center;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .category-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .category-card:hover {
+      transform: scale(1.05);
+    }
+
+    .category-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .category-card p {
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 10px;
+      background: var(--button-bg);
+      color: white;
+      margin: 0;
+    }
+
+    @media (max-width: 600px) {
+      .categories-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    footer {
+      background: var(--nav-bg);
+      padding: 10px;
+      color: white;
+      text-align: center;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="cart.html">عربة التسوق</a>
+      <a href="sm.html">سوبر ماركت</a>
+      <a href="m.html">موبايلات</a>
+      <a href="xm.html">إكسسوارات موبايل</a>
+    </div>
+  </nav>
+
+  <div class="content">
+    <img class="logo" src="./image/Logo.png" alt="شعار الموقع">
+    <div class="search-container">
+      <input type="text" id="search-box" placeholder="ابحث هنا..." oninput="searchCategories()">
+    </div>
+    <div class="categories-container" id="categories-container">
+      <!-- يتم تحميل الأقسام ديناميكيًا هنا -->
+    </div>
+  </div>
+
+  <footer>&copy; 2025 سوق بلدنا - جميع الحقوق محفوظة</footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      loadCategories();
+    });
+
+    function loadCategories() {
+      const categories = [
+        { name: "سوبر ماركت", image: "./image/sm.jpeg", link: "sm.html" },
+        { name: "موبايلات", image: "./image/Selfone.jpg", link: "m.html" },
+        { name: "اكسسوارات موبايل", image: "./image/xm.jpg", link: "xm.html" },
+        { name: "غير متوفر", image: "./image/dairy.jpg", link: "dairy.html" },
+        { name: "غير متوفر", image: "./image/meat.jpg", link: "meat.html" },
+        { name: "غير متوفر", image: "./image/fish.jpg", link: "fish.html" }
+      ];
+
+      const container = document.getElementById("categories-container");
+      container.innerHTML = "";
+
+      categories.forEach(category => {
+        const categoryCard = document.createElement("div");
+        categoryCard.classList.add("category-card");
+        categoryCard.onclick = () => window.location.href = category.link;
+
+        categoryCard.innerHTML = `
+          <img src="${category.image}" alt="${category.name}">
+          <p>${category.name}</p>
+        `;
+
+        container.appendChild(categoryCard);
+      });
+    }
+
+    function searchCategories() {
+      const query = document.getElementById("search-box").value.toLowerCase();
+      const categories = document.querySelectorAll(".category-card");
+
+      categories.forEach(category => {
+        const categoryName = category.querySelector("p").innerText.toLowerCase();
+        category.style.display = categoryName.includes(query) ? "block" : "none";
+      });
+    }
+  </script>
+
+</body>
+</html>

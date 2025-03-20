@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سوق بلدنا - عربة التسوق</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text-color: #333;
+      --button-bg: #FF5722;
+      --button-hover: #E64A19;
+      --background-color: #FFC300;
+      --nav-bg: #D84315;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--background-color);
+      color: var(--text-color);
+      text-align: center;
+      direction: rtl;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* شريط التنقل */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      padding: 10px 0;
+      z-index: 1000;
+      overflow-x: auto;
+      white-space: nowrap;
+      display: flex;
+      scrollbar-width: none;
+    }
+
+    nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      padding: 0 10px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      transition: background 0.3s;
+      flex-shrink: 0;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* المحتوى */
+    .content {
+      width: 90%;
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      margin-top: 80px;
+    }
+
+    .logo {
+      width: 250px;
+      height: auto;
+      display: block;
+      margin: 10px auto;
+    }
+
+    /* قائمة عربة التسوق */
+    .cart-items {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .cart-item {
+      width: 90%;
+      max-width: 500px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      margin: 10px 0;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      align-items: center;
+    }
+
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+      margin-left: 10px;
+      text-align: right;
+    }
+
+    .cart-item-info h3 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+    }
+
+    .cart-item-info p {
+      font-size: 1rem;
+    }
+
+    .remove-btn {
+      background: var(--button-bg);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .remove-btn:hover {
+      background: var(--button-hover);
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantity-btn {
+      padding: 5px 10px;
+      background: var(--button-bg);
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .quantity-btn:hover {
+      background: var(--button-hover);
+    }
+
+    .total-container {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.2rem;
+    }
+
+    .checkout-btn {
+      background: var(--button-bg);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .checkout-btn:hover {
+      background: var(--button-hover);
+    }
+
+    .info-message {
+      background: #ffcc00;
+      color: #333;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      text-align: center;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- شريط التنقل -->
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="cart.html">عربة التسوق</a>
+      <a href="sm.html">سوبر ماركت</a>
+      <a href="m.html">موبايلات</a>
+      <a href="xm.html">اكسسوارات موبايل</a>
+    </div>
+  </nav>
+
+  <!-- المحتوى -->
+  <div class="content">
+    <img class="logo" src="./image/Logo.png" alt="شعار الموقع">
+
+    <!-- رسالة تنبيه -->
+    <div class="info-message">
+      يرجى العلم أن الحد الأدنى لإجمالي سعر التوصيل هو 10 ج.م.
+    </div>
+
+    <!-- قائمة عربة التسوق -->
+    <div class="cart-items" id="cart-items">
+      <!-- سيتم إضافة المنتجات هنا -->
+    </div>
+
+    <!-- إجمالي السعر والزرا -->
+    <div class="total-container">
+      <div><strong>إجمالي السعر:</strong> <span id="total-price">0</span> ج.م</div>
+      <div><strong>إجمالي التوصيل:</strong> <span id="total-shipping">0</span> ج.م</div>
+      <button class="checkout-btn" onclick="checkout()">إتمام الشراء</button>
+    </div>
+  </div>
+
+  <script>
+  // استرجاع العربة من localStorage
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // عرض المنتجات في العربة
+  function displayCart() {
+    const cartItemsContainer = document.getElementById("cart-items");
+    cartItemsContainer.innerHTML = ""; // مسح المحتوى الحالي
+
+    let totalPrice = 0;
+    let totalShipping = 0;
+
+    cart.forEach((product, index) => {
+      totalPrice += product.price * product.quantity;
+      totalShipping += product.shipping * product.quantity;
+
+      // إنشاء العنصر
+      const cartItem = document.createElement("div");
+      cartItem.classList.add("cart-item");
+
+      cartItem.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <div class="cart-item-info">
+          <h3>${product.name}</h3>
+          <p>${product.price} ج.م</p>
+          <p>سعر التوصيل: ${product.shipping} ج.م</p>
+          <div class="quantity-controls">
+            <button class="quantity-btn" onclick="updateQuantity(${index}, 'decrease')">-</button>
+            <span>${product.quantity}</span>
+            <button class="quantity-btn" onclick="updateQuantity(${index}, 'increase')">+</button>
+          </div>
+        </div>
+        <button class="remove-btn" onclick="removeFromCart(${index})">إزالة</button>
+      `;
+
+      cartItemsContainer.appendChild(cartItem);
+    });
+
+    // إذا كان إجمالي التوصيل أقل من 10، اجعل التوصيل 10 ج.م
+    if (totalShipping < 10) {
+      totalShipping = 10;
+    }
+
+    // تحديث إجمالي السعر والتوصيل
+    document.getElementById("total-price").innerText = totalPrice;
+    document.getElementById("total-shipping").innerText = totalShipping;
+  }
+
+  // تحديث الكمية
+  function updateQuantity(index, action) {
+    if (action === 'increase') {
+      cart[index].quantity++;
+    } else if (action === 'decrease' && cart[index].quantity > 1) {
+      cart[index].quantity--;
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCart();
+  }
+
+  // إزالة منتج من العربة
+  function removeFromCart(index) {
+    cart.splice(index, 1); // إزالة المنتج من العربة
+    localStorage.setItem("cart", JSON.stringify(cart)); // تحديث العربة في localStorage
+    displayCart(); // إعادة عرض العربة
+  }
+
+  // إتمام الشراء
+  function checkout() {
+    if (cart.length === 0) {
+      alert("العربة فارغة!");
+    } else {
+      const totalPrice = document.getElementById("total-price").innerText;
+      const totalShipping = document.getElementById("total-shipping").innerText;
+
+      // جمع أسماء المنتجات والكميات
+      let productList = cart.map(product => `${product.name} (x${product.quantity})`).join("\n");
+
+      // رسالة على واتساب
+      const phoneNumber = "201066582483"; // رقم الهاتف الذي ستتم المحادثة معه
+      const message = `سوبر ماركت: تمت عملية الشراء بنجاح! \nإجمالي السعر: ${totalPrice} ج.م \nإجمالي التوصيل: ${totalShipping} ج.م \n\nالمنتجات المطلوبة:\n${productList}`;
+
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, "_blank");
+
+      // مسح العربة بعد عملية الشراء
+      localStorage.removeItem("cart");
+    }
+  }
+
+  // استدعاء دالة عرض العربة عند تحميل الصفحة
+  displayCart();
+</script>
+</body>
+</html>
